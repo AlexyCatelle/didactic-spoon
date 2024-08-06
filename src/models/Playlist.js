@@ -33,9 +33,9 @@ export default class Playlist {
         this.#name = value.trim();
     };
 
-    //method
+    //method CRUD
 
-    //récupère toutes les playlist
+    // READ
     static async findAll() {
         const result = await client.query(`SELECT * FROM "playlist" ORDER BY "id";`);
         const playlists = result.rows;
@@ -46,12 +46,16 @@ export default class Playlist {
         return playlistsObj;
     };
 
-    // sauvegarde la playlist en base de données
+    // CREATE
     async save() {
         const text = `INSERT INTO "playlist" ("name") VALUES ($1) RETURNING id;`;
         const values = [this.name];
         const result = await client.query(text, values);
         this.#id = result.rows[0].id;
-    }
+    };
 
-}
+    // DELETE
+
+    // UPDATE
+
+};

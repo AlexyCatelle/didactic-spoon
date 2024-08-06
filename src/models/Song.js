@@ -64,7 +64,9 @@ export default class Song {
         this.#playlist_id = value;
     };
 
-    // METHOD
+    // METHOD CRUD
+
+    // READ
 
     // Récupère toutes les chansons d'une playlist
     static async findAllByPlaylistId(id) {
@@ -80,12 +82,28 @@ export default class Song {
             return songsObj;
         }
         catch (error) {
-            console.log(error)
+            console.error(error);
         }
-
-
     };
 
+    // Récupère toutes les chansons avec leur nom de playlist
+    static async findAllWithPlaylistName() {
+        try {
+            const text = `SELECT * FROM "song" JOIN "playlist" ON "song"."playlist_id"="playlist"."id";`
+            const result = await client.query(text);
+            const songs = result.rows;
+            const songsObj = [];
+            for (const song of songs) {
+                songsObj.push(new Song(song))
+            };
+            return songsObj;
+        }
+        catch (error) {
+            console.error(error);
+        }
+    };
+
+    // CREATE
     // Ajoute une chanson à une playlist
     async addSongToPlaylist() {
         try {
@@ -97,6 +115,5 @@ export default class Song {
         catch (error) {
             console.log(error)
         }
-
     };
 }
