@@ -116,4 +116,35 @@ export default class Song {
             console.log(error)
         }
     };
-}
+
+    // UPDATE
+    // Modifie le lien d'une chanson
+    async updateLink(newLink) {
+        try {
+            if (!validator.isURL(newLink)) {
+                throw new Error('Adresse incorrecte');
+            }
+            const text = `UPDATE "song" SET "link" = $1 WHERE "id" = $2;`;
+            const values = [newLink, this.id];
+            await client.query(text, values);
+            this.#link = newLink;  // Met à jour le lien dans l'objet
+        }
+        catch (error) {
+            console.error(error);
+        }
+    };
+
+    // DELETE
+    // supprime une chanson
+    async deleteSong() {
+        try {
+            const text = `DELETE FROM "song" WHERE "id" = $1;`;
+            const values = [this.id];
+            await client.query(text, values);
+        }
+        catch (error) {
+            console.error(error);
+        }
+    };
+
+};
