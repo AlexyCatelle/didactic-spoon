@@ -1,0 +1,60 @@
+<%-include('../partials/header') %>
+
+    <body>
+        <header class="header">
+            <h1 class="header__title">Playlist</h1>
+        </header>
+        <main class="content">
+            <div class="content__container">
+                <div class="content__container__playlist">
+                    <h2 class="content__container__playlist__title">Playlist</h2>
+                    <ul class="content__container__playlist__list">
+                        <% for (let i=0; i < songs.length; i++) { %>
+                            <li class="content__container__playlist__list__item">
+                                <%= songs[i].title %>
+                            </li>
+                            <% } %>
+                    </ul>
+                </div>
+            </div>
+            <div class="content__player">
+                <h2 class="content__player__title">Player</h2>
+                <div class="content__player__container">
+                    <div id="player" class="content__player__container__video">
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <script type="text/javascript">
+            const songList = <% - JSON.stringify(songs) %>;
+
+            const getYTHtml = async (url) => {
+                fetch('https://www.youtube.com/oembed?url=' + url + '&format=json').then((response) => {
+                    return response.json();
+                }).then((data) => {
+                    console.log(data.html)
+                    document.querySelector('#player').innerHTML = data.html;
+                });
+            }
+
+
+            const loadVideo = async (song) => {
+                console.log('video loaded')
+                await getYTHtml(song.link);
+            }
+
+            const songItem = document.querySelectorAll('.content__container__playlist__list__item')
+
+            for (const elem of songItem) {
+                elem.addEventListener('click', (e) => {
+                    const title = e.target.innerText;
+                    const song = songList.find(song => song.title === title);
+                    loadVideo(song);
+                })
+            }
+
+            loadVideo(songList[0]);
+
+        </script>
+        <%-include('../partials/footer') %>

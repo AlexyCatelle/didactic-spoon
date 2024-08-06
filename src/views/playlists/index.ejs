@@ -1,0 +1,46 @@
+<%-include('../partials/header') %>
+
+    <main class="content">
+        <div class="content__container">
+            <div class="content__container__playlist">
+                <h2 class="content__container__playlist__title">Playlist</h2>
+                <ul class="content__container__playlist__list">
+                    <% for (let i = 0; i < playlists.length; i++) { %>
+                        <li class="content__container__playlist__list__item">
+                            <a href="/playlists/<%= playlists[i].id %>" class="content__container__playlist__list__item__link">
+                                <%= playlists[i].name %>
+                            </a>
+                        </li>
+                    <% } %>
+                </ul>
+            </div>
+            <div class="content__container__add">
+                <h2 class="content__container__add__title">Ajouter une playlist</h2>
+                <form action="/playlists" method="POST" class="content__container__add__form">
+                    <div class="input__group">
+                        <label for="name" class="content__container__add__form__label">Nom</label>
+                        <input type="text" name="name" id="name" class="content__container__add__form__input">
+                    </div>
+                    <button type="submit" class="content__container__add__form__button">Créer</button>
+                </form>
+            </div>
+            <div class="content__container__add">
+                <h2 class="content__container__add__title">Ajouter un son</h2>
+                <!-- Il semblerait que la route POST /playlists/addSong ne redirige actuellement vers rien du tout -->
+                <form action="/playlists/addSong" method="POST" class="content__container__add__form">
+                    <div class="input__group">
+                        <label for="name" class="content__container__add__form__label">Titre</label>
+                        <input type="text" name="title" id="title" class="content__container__add__form__input">
+                        <label for="name" class="content__container__add__form__label">Lien</label>
+                        <input type="text" name="link" id="link" class="content__container__add__form__input">
+                        <label for="name" class="content__container__add__form__label">Identifiant de la playlist</label>
+                        <input type="text" name="playlistId" id="playlistId" class="content__container__add__form__input">
+                    </div>
+                    <button type="submit" class="content__container__add__form__button">Ajouter</button>
+                </form>
+            </div>
+        </div>
+       
+    </main>
+    
+    <%-include('../partials/footer') %>
