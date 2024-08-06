@@ -14,8 +14,8 @@ O'Playlist est un projet de site web permettant de créer des playlists de musiq
 - Afficher la liste des vidéos d'une playlist
 - Ajouter une playlist
 - Ajouter une vidéo à une playlist
-- Supprimer une video d'une playlist
-- Modifier le nom d'une playlist
+- Supprimer une video
+- Modifier le lien d'une video
 
 ## Technos
 
